@@ -1,6 +1,10 @@
 <?php
+
 namespace Arifpay\Arifpay\Interface;
 
-class ArifpayOptions{
-    function __construct(public bool $sandbox){}
+class ArifpayOptions
+{
+    public function __construct(public bool $sandbox)
+    {
+    }
 }

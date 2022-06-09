@@ -1,6 +1,10 @@
-<?php 
+<?php
+
 namespace Arifpay\Arifpay\Interface\Exception;
 
-class ArifpayUnAuthorizedException extends Exception{
-    public function __construct(public string $msg){}
+class ArifpayUnAuthorizedException extends Exception
+{
+    public function __construct(public string $msg)
+    {
+    }
 }
