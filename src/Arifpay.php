@@ -26,14 +26,14 @@ class Arifpay
     public function __construct(public string $apikey)
     {
         $this->http_client = Http::baseUrl("$this->DEFAULT_HOST/$this->API_VERSION")
-      ->timeout($this->DEFAULT_TIMEOUT)
-      ->withHeaders(
-          [
-          'content-type' => 'application/json',
-          'Accept' => 'application/json',
-          'x-arifpay-key' => $this->apikey,
-        ]
-      );
+            ->timeout($this->DEFAULT_TIMEOUT)
+            ->withHeaders(
+                [
+                    'content-type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'x-arifpay-key' => $this->apikey,
+                ]
+            );
     }
 
     public function checkout()
@@ -46,6 +46,7 @@ class Arifpay
         try {
             $basePath = $option->sandbox ? '/sandbox' : '';
             $response = $this->http_client->post("$basePath/checkout/session",  $arifpayCheckoutRequest);
+            $response->throw();
 
             $arifAPIResponse = ArifpayAPIResponse::fromJson($response->json());
 
@@ -64,6 +65,7 @@ class Arifpay
         try {
             $basePath = $option->sandbox ? '/sandbox' : '';
             $response = $this->http_client->get("$basePath/checkout/session/$session_iD");
+            $response->throw();
 
             $arifAPIResponse = ArifpayAPIResponse::fromJson($response->json());
 
