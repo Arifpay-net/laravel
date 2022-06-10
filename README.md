@@ -114,10 +114,10 @@ This is session response object contains the following fields
 
 To track the progress of a checkout session you can use the fetch method as shown below:
 
-```js
- const arifpay = new Arifpay('API KEY...');
+```php
+ $arifpay = new Arifpay('API KEY...');
 // A sessionId will be returned when creating a session.
- const session = await arifpay.checkout.fetch('checkOutSessionID', { sandbox: true});
+ $session = $arifpay->checkout->fetch('checkOutSessionID', new ArifpayOptions(sandbox: true));
 ```
 
 The following object represents a session
@@ -147,7 +147,9 @@ Released Date: `v1.0.0` June 09, 2022
 - [Check Full Example](https://github.com/Arifpay-net/Laravel-sample)
 - [REST API Version](https://developer.arifpay.net/docs/checkout/overview)
 - [Mobile SDK](https://developer.arifpay.net/docs/clientSDK/overview)
-- [Change Log](https://developer.arifpay.net/docs/nodejs/changelog)
+- [Node JS](https://developer.arifpay.net/docs/nodejs/overview)
+- [Laravel](https://developer.arifpay.net/docs/laravel/overview)
+- [Change Log](https://developer.arifpay.net/docs/laravel/changelog)
 
 ## Credits
 
