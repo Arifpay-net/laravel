@@ -12,7 +12,7 @@ test('checkout Is istance of  Checkout', function () {
     $arifpay = new Arifpay('myAPI');
     $this->assertTrue($arifpay->checkout() instanceof Arifpay);
 });
-/* 
+/*
 test('Creates Checkout Session', function () {
     $arifpay = new Arifpay('HrUDdrOv3TV92cgpzpbQ3DakLJtHfYfh');
     $d = new  Carbon();

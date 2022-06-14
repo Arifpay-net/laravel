@@ -2,9 +2,9 @@
 
 namespace Arifpay\Arifpay;
 
+use Arifpay\Arifpay\Commands\ArifpayCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Arifpay\Arifpay\Commands\ArifpayCommand;
 
 class ArifpayServiceProvider extends PackageServiceProvider
 {

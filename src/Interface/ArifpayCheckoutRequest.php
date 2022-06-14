@@ -1,12 +1,12 @@
 <?php
-namespace Arifpay\Arifpay\Interface;
-use JsonSerializable;
 
+namespace Arifpay\Arifpay\Interface;
+
+use JsonSerializable;
 
 class ArifpayCheckoutRequest implements JsonSerializable
 {
-
-    function __construct(
+    public function __construct(
         public string $cancel_url,
         public string $nonce,
         public string $error_url,
