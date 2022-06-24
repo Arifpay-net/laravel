@@ -58,10 +58,10 @@ After importing the `arifpay` package, use the checkout property of the Arifpay 
 
 use Arifpay\Arifpay\Arifpay;
 use Arifpay\Arifpay\Helper\ArifpaySupport;
-use Arifpay\Arifpay\Interface\ArifpayBeneficary;
-use Arifpay\Arifpay\Interface\ArifpayCheckoutItem;
-use Arifpay\Arifpay\Interface\ArifpayCheckoutRequest;
-use Arifpay\Arifpay\Interface\ArifpayOptions;
+use Arifpay\Arifpay\Lib\ArifpayBeneficary;
+use Arifpay\Arifpay\Lib\ArifpayCheckoutItem;
+use Arifpay\Arifpay\Lib\ArifpayCheckoutRequest;
+use Arifpay\Arifpay\Lib\ArifpayOptions;
 
 use Illuminate\Support\Carbon;
 

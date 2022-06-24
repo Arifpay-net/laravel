@@ -2,15 +2,15 @@
 
 namespace Arifpay\Arifpay;
 
-use Arifpay\Arifpay\Interface\ArifpayAPIResponse;
-use Arifpay\Arifpay\Interface\ArifpayCheckoutRequest;
-use Arifpay\Arifpay\Interface\ArifpayCheckoutResponse;
-use Arifpay\Arifpay\Interface\ArifpayCheckoutSession;
-use Arifpay\Arifpay\Interface\ArifpayOptions;
-use Arifpay\Arifpay\Interface\Exception\ArifpayBadRequestException;
-use Arifpay\Arifpay\Interface\Exception\ArifpayException;
-use Arifpay\Arifpay\Interface\Exception\ArifpayNetworkException;
-use Arifpay\Arifpay\Interface\Exception\ArifpayUnAuthorizedException;
+use Arifpay\Arifpay\Lib\ArifpayAPIResponse;
+use Arifpay\Arifpay\Lib\ArifpayCheckoutRequest;
+use Arifpay\Arifpay\Lib\ArifpayCheckoutResponse;
+use Arifpay\Arifpay\Lib\ArifpayCheckoutSession;
+use Arifpay\Arifpay\Lib\ArifpayOptions;
+use Arifpay\Arifpay\Lib\Exception\ArifpayBadRequestException;
+use Arifpay\Arifpay\Lib\Exception\ArifpayException;
+use Arifpay\Arifpay\Lib\Exception\ArifpayNetworkException;
+use Arifpay\Arifpay\Lib\Exception\ArifpayUnAuthorizedException;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
@@ -22,9 +22,11 @@ class Arifpay
     public $PACKAGE_VERSION = '1.0.0';
     public $DEFAULT_TIMEOUT = 1000 * 60 * 2;
     private $http_client;
+    public string $apikey;
 
-    public function __construct(public string $apikey)
+    public function __construct($apikey)
     {
+        $this->apikey = $apikey;
         $this->http_client = Http::baseUrl("$this->DEFAULT_HOST/$this->API_VERSION")
             ->timeout($this->DEFAULT_TIMEOUT)
             ->withHeaders(
@@ -41,8 +43,10 @@ class Arifpay
         return $this;
     }
 
-    public function create(ArifpayCheckoutRequest $arifpayCheckoutRequest, ArifpayOptions $option = new ArifpayOptions(false)): ArifpayCheckoutResponse
+    public function create(ArifpayCheckoutRequest $arifpayCheckoutRequest, ArifpayOptions $option = null): ArifpayCheckoutResponse
     {
+        if ($option == null)
+            $option = new ArifpayOptions(false);
         try {
             $basePath = $option->sandbox ? '/sandbox' : '';
             $response = $this->http_client->post("$basePath/checkout/session",  $arifpayCheckoutRequest);
@@ -60,8 +64,10 @@ class Arifpay
         }
     }
 
-    public function fetch(string $session_iD, ArifpayOptions $option = new ArifpayOptions(false)): ArifpayCheckoutSession
+    public function fetch(string $session_iD, ArifpayOptions $option = null): ArifpayCheckoutSession
     {
+        if ($option == null)
+            $option = new ArifpayOptions(false);
         try {
             $basePath = $option->sandbox ? '/sandbox' : '';
             $response = $this->http_client->get("$basePath/checkout/session/$session_iD");

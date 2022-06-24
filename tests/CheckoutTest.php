@@ -2,10 +2,10 @@
 
 use Arifpay\Arifpay\Arifpay;
 use Arifpay\Arifpay\Helper\ArifpaySupport;
-use Arifpay\Arifpay\Interface\ArifpayCheckoutResponse;
-use Arifpay\Arifpay\Interface\ArifpayOptions;
-use Arifpay\Arifpay\Interface\Exception\ArifpayBadRequestException;
-use Arifpay\Arifpay\Interface\Exception\ArifpayUnAuthorizedException;
+use Arifpay\Arifpay\Lib\ArifpayCheckoutResponse;
+use Arifpay\Arifpay\Lib\ArifpayOptions;
+use Arifpay\Arifpay\Lib\Exception\ArifpayBadRequestException;
+use Arifpay\Arifpay\Lib\Exception\ArifpayUnAuthorizedException;
 use Illuminate\Support\Carbon;
 
 test('checkout Is istance of  Checkout', function () {
