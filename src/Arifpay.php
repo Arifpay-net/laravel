@@ -45,8 +45,10 @@ class Arifpay
 
     public function create(ArifpayCheckoutRequest $arifpayCheckoutRequest, ArifpayOptions $option = null): ArifpayCheckoutResponse
     {
-        if ($option == null)
+        if ($option == null) {
             $option = new ArifpayOptions(false);
+        }
+
         try {
             $basePath = $option->sandbox ? '/sandbox' : '';
             $response = $this->http_client->post("$basePath/checkout/session",  $arifpayCheckoutRequest);
@@ -66,8 +68,10 @@ class Arifpay
 
     public function fetch(string $session_iD, ArifpayOptions $option = null): ArifpayCheckoutSession
     {
-        if ($option == null)
+        if ($option == null) {
             $option = new ArifpayOptions(false);
+        }
+
         try {
             $basePath = $option->sandbox ? '/sandbox' : '';
             $response = $this->http_client->get("$basePath/checkout/session/$session_iD");

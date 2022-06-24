@@ -18,8 +18,8 @@ class ArifpayServiceProvider extends PackageServiceProvider
         $package
             ->name('arifpay')
             ->hasConfigFile();
-            /* ->hasMigration('create_arifpay_table')
-            ->hasRoute('api')
-            ->hasCommand(ArifpayCommand::class); */
+        /* ->hasMigration('create_arifpay_table')
+        ->hasRoute('api')
+        ->hasCommand(ArifpayCommand::class); */
     }
 }

@@ -1,7 +1,8 @@
 <?php
-namespace Arifpay\Arifpay\Lib;
-use JsonSerializable;
 
+namespace Arifpay\Arifpay\Lib;
+
+use JsonSerializable;
 
 class ArifpayCheckoutRequest implements JsonSerializable
 {
@@ -15,7 +16,7 @@ class ArifpayCheckoutRequest implements JsonSerializable
     public $items;
     public $beneficiaries;
 
-    function __construct(
+    public function __construct(
         $cancel_url,
         $nonce,
         $error_url,
@@ -24,7 +25,8 @@ class ArifpayCheckoutRequest implements JsonSerializable
         $paymentMethods,
         $expireDate,
         $items,
-        $beneficiaries)
+        $beneficiaries
+    )
     {
         $this->cancel_url = $cancel_url;
         $this->nonce = $nonce;
@@ -35,9 +37,6 @@ class ArifpayCheckoutRequest implements JsonSerializable
         $this->expireDate = $expireDate;
         $this->items = $items;
         $this->beneficiaries = $beneficiaries;
-
-
-
     }
 
     public function jsonSerialize()
