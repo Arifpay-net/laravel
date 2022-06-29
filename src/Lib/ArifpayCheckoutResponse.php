@@ -35,6 +35,6 @@ class ArifpayCheckoutResponse implements JsonSerializable
 
     public static function fromJson($data)
     {
-        return new ArifpayCheckoutResponse($data->sessionId, $data->paymentUrl, $data->cancelUrl, $data->totalAmount);
+        return new ArifpayCheckoutResponse($data["sessionId"], $data["paymentUrl"], $data["cancelUrl"], $data["totalAmount"]);
     }
 }
