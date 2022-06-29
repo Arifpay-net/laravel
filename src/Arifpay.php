@@ -51,7 +51,7 @@ class Arifpay
 
         try {
             $basePath = $option->sandbox ? '/sandbox' : '';
-            $response = $this->http_client->post("$basePath/checkout/session",  $arifpayCheckoutRequest);
+            $response = $this->http_client->post("$basePath/checkout/session",  $arifpayCheckoutRequest->jsonSerialize());
             $response->throw();
 
             $arifAPIResponse = ArifpayAPIResponse::fromJson($response->json());
