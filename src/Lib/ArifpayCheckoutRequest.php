@@ -26,8 +26,7 @@ class ArifpayCheckoutRequest implements JsonSerializable
         $expireDate,
         $items,
         $beneficiaries
-    )
-    {
+    ) {
         $this->cancel_url = $cancel_url;
         $this->nonce = $nonce;
         $this->error_url = $error_url;
