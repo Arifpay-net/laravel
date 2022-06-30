@@ -17,6 +17,6 @@ class ArifpayAPIResponse
 
     public static function fromJson($json)
     {
-        return new ArifpayAPIResponse($json->error, $json->msg, $json->data);
+        return new ArifpayAPIResponse($json["error"], $json["msg"], $json["data"]);
     }
 }
