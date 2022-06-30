@@ -11,11 +11,10 @@ use Arifpay\Arifpay\Lib\Exception\ArifpayBadRequestException;
 use Arifpay\Arifpay\Lib\Exception\ArifpayException;
 use Arifpay\Arifpay\Lib\Exception\ArifpayNetworkException;
 use Arifpay\Arifpay\Lib\Exception\ArifpayUnAuthorizedException;
-use Exception;
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\RequestOptions;
-use GuzzleHttp\Client;
 use League\Flysystem\ConnectionErrorException;
 
 class ArifPay
@@ -28,7 +27,6 @@ class ArifPay
     public $PACKAGE_VERSION = '1.1.2';
     public $DEFAULT_TIMEOUT = 1000 * 60 * 2;
 
-
     public function __construct($apikey)
     {
         $this->apikey = $apikey;
@@ -38,7 +36,7 @@ class ArifPay
                 'x-arifpay-key' => $apikey,
                 "Content-Type" => "application/json",
                 "Accepts" => "application/json",
-            ]
+            ],
         ]);
     }
 
@@ -62,6 +60,7 @@ class ArifPay
             throw new ArifpayNetworkException();
         } catch (ClientException $e) {
             $this->__handleException($e);
+
             throw $e;
         }
     }
@@ -83,10 +82,10 @@ class ArifPay
             throw new ArifpayNetworkException();
         } catch (RequestException $e) {
             $this->__handleException($e);
+
             throw $e;
         }
     }
-
 
     private function __handleException(ClientException $e)
     {
@@ -98,10 +97,11 @@ class ArifPay
             if ($response->getStatusCode() === 400) {
                 $responseBodyAsString = $response->getBody()->getContents();
                 $msg = "Invalid Request, check your Request body.";
-                if (!empty($responseBodyAsString)) {
+                if (! empty($responseBodyAsString)) {
                     $responseJson = json_decode($responseBodyAsString, true);
                     $msg = $responseJson["msg"];
                 }
+
                 throw new ArifpayBadRequestException($msg, $e);
             }
 

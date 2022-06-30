@@ -7,8 +7,6 @@ use Throwable;
 
 class ArifpayNetworkException extends ConnectionErrorException
 {
-
-
     // Redefine the exception so message isn't optional
     public function __construct(Throwable $previous = null)
     {
