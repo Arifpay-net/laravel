@@ -140,6 +140,11 @@ Released Date: `v1.0.0` June 09, 2022
 
 - Initial Release
 
+Released Date: `v1.2.1` June 30, 2022
+
+- Name space changed. use Arifpay/Arifpay
+- Exception Handling Improved
+
 
 
 ## More Information
