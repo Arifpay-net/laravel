@@ -11,36 +11,35 @@ use Arifpay\Arifpay\Lib\Exception\ArifpayBadRequestException;
 use Arifpay\Arifpay\Lib\Exception\ArifpayException;
 use Arifpay\Arifpay\Lib\Exception\ArifpayNetworkException;
 use Arifpay\Arifpay\Lib\Exception\ArifpayUnAuthorizedException;
-use Illuminate\Http\Client\ConnectionException;
-use Illuminate\Http\Client\RequestException;
-use Illuminate\Support\Facades\Http;
+use Exception;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\RequestOptions;
+use GuzzleHttp\Client;
+use League\Flysystem\ConnectionErrorException;
 
-class Arifpay
+class ArifPay
 {
+    public $http_client;
+    public $apikey;
+
     public $DEFAULT_HOST = 'https://gateway.arifpay.net';
     public $API_VERSION = '/v0';
-    public $PACKAGE_VERSION = '1.1.1';
+    public $PACKAGE_VERSION = '1.1.2';
     public $DEFAULT_TIMEOUT = 1000 * 60 * 2;
-    private $http_client;
-    public string $apikey;
+
 
     public function __construct($apikey)
     {
         $this->apikey = $apikey;
-        $this->http_client = Http::baseUrl("$this->DEFAULT_HOST/$this->API_VERSION")
-            ->timeout($this->DEFAULT_TIMEOUT)
-            ->withHeaders(
-                [
-                    'content-type' => 'application/json',
-                    'Accept' => 'application/json',
-                    'x-arifpay-key' => $this->apikey,
-                ]
-            );
-    }
-
-    public function checkout()
-    {
-        return $this;
+        $this->http_client = new Client([
+            'base_uri' => $this->DEFAULT_HOST,
+            'headers' => [
+                'x-arifpay-key' => $apikey,
+                "Content-Type" => "application/json",
+                "Accepts" => "application/json",
+            ]
+        ]);
     }
 
     public function create(ArifpayCheckoutRequest $arifpayCheckoutRequest, ArifpayOptions $option = null): ArifpayCheckoutResponse
@@ -51,17 +50,18 @@ class Arifpay
 
         try {
             $basePath = $option->sandbox ? '/sandbox' : '';
-            $response = $this->http_client->post("$basePath/checkout/session",  $arifpayCheckoutRequest->jsonSerialize());
-            $response->throw();
+            $response = $this->http_client->post("{$this->API_VERSION}$basePath/checkout/session", [
+                RequestOptions::JSON => $arifpayCheckoutRequest->jsonSerialize(),
+            ]);
 
-            $arifAPIResponse = ArifpayAPIResponse::fromJson($response->json());
+            $arifAPIResponse = ArifpayAPIResponse::fromJson(json_decode($response->getBody(), true));
+
 
             return ArifpayCheckoutResponse::fromJson($arifAPIResponse->data);
-        } catch (ConnectionException $e) {
+        } catch (ConnectionErrorException $e) {
             throw new ArifpayNetworkException();
-        } catch (RequestException $e) {
+        } catch (ClientException $e) {
             $this->__handleException($e);
-
             throw $e;
         }
     }
@@ -74,34 +74,40 @@ class Arifpay
 
         try {
             $basePath = $option->sandbox ? '/sandbox' : '';
-            $response = $this->http_client->get("$basePath/checkout/session/$session_iD");
-            $response->throw();
+            $response = $this->http_client->get("{$this->API_VERSION}$basePath/checkout/session/$session_iD");
 
-            $arifAPIResponse = ArifpayAPIResponse::fromJson($response->json());
+            $arifAPIResponse = ArifpayAPIResponse::fromJson(json_decode($response->getBody(), true));
 
             return ArifpayCheckoutSession::fromJson($arifAPIResponse->data);
-        } catch (ConnectionException $e) {
+        } catch (ConnectionErrorException $e) {
             throw new ArifpayNetworkException();
         } catch (RequestException $e) {
             $this->__handleException($e);
-
             throw $e;
         }
     }
 
-    private function __handleException(RequestException $e)
+
+    private function __handleException(ClientException $e)
     {
-        if ($e->response) {
-            if ($e->response->status() == 401) {
-                throw new ArifpayUnAuthorizedException('Invalid authentication credentials');
+        $response = $e->getResponse();
+        if ($response) {
+            if ($response->getStatusCode() == 401) {
+                throw new ArifpayUnAuthorizedException('Invalid authentication credentials', $e);
             }
-            if ($e->response->status() === 400) {
-                throw new ArifpayBadRequestException($e->response->data["msg"]);
+            if ($response->getStatusCode() === 400) {
+                $responseBodyAsString = $response->getBody()->getContents();
+                $msg = "Invalid Request, check your Request body.";
+                if (!empty($responseBodyAsString)) {
+                    $responseJson = json_decode($responseBodyAsString, true);
+                    $msg = $responseJson["msg"];
+                }
+                throw new ArifpayBadRequestException($msg, $e);
             }
 
-            throw new ArifpayException($e->response->data["msg"]);
+            throw new ArifpayException($e->response->data["msg"], $e);
         } else {
-            throw new ArifpayNetworkException();
+            throw new ArifpayNetworkException($e);
         }
     }
 }

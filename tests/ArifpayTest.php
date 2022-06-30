@@ -1,6 +1,6 @@
 <?php
 
-use Arifpay\Arifpay\Arifpay;
+use Arifpay\Arifpay\Lib\Arifpay;
 
 it('can test', function () {
     expect(true)->toBeTrue();
@@ -8,6 +8,10 @@ it('can test', function () {
 
 it('Creates Instance', function () {
     $this->assertTrue(new Arifpay('myAPI') instanceof Arifpay);
+});
+
+it('Is Latest Version Instance', function () {
+    $this->assertTrue((new Arifpay('myAPI'))->PACKAGE_VERSION == '1.1.2');
 });
 
 it('Check API key is Set', function () {
