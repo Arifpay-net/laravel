@@ -21,7 +21,7 @@ class ArifpayCheckoutSession implements JsonSerializable
         $this->totalAmount = $totalAmount;
         $this->test = $test;
         $this->uuid = $uuid;
-        $this->$created_at;
+        $this->$created_at = $created_at;
         $this->update_at = $update_at;
     }
 
@@ -33,7 +33,7 @@ class ArifpayCheckoutSession implements JsonSerializable
             "totalAmount" => $this->totalAmount,
             "test" => $this->test,
             "uuid" => $this->uuid,
-            "created_at" => $this->created,
+            "created_at" => $this->created_at,
             "update_at" => $this->update_at,
         ];
     }
