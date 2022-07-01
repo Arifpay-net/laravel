@@ -24,7 +24,7 @@ class ArifPay
 
     public $DEFAULT_HOST = 'https://gateway.arifpay.net';
     public $API_VERSION = '/v0';
-    public $PACKAGE_VERSION = '1.2.0';
+    public $PACKAGE_VERSION = '1.2.1';
     public $DEFAULT_TIMEOUT = 1000 * 60 * 2;
 
     public function __construct($apikey)
