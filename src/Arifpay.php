@@ -10,6 +10,7 @@ use Arifpay\Arifpay\Lib\ArifpayOptions;
 use Arifpay\Arifpay\Lib\Exception\ArifpayBadRequestException;
 use Arifpay\Arifpay\Lib\Exception\ArifpayException;
 use Arifpay\Arifpay\Lib\Exception\ArifpayNetworkException;
+use Arifpay\Arifpay\Lib\Exception\ArifpayNotFoundException;
 use Arifpay\Arifpay\Lib\Exception\ArifpayUnAuthorizedException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
@@ -24,7 +25,7 @@ class ArifPay
 
     public $DEFAULT_HOST = 'https://gateway.arifpay.net';
     public $API_VERSION = '/v0';
-    public $PACKAGE_VERSION = '1.2.1';
+    public $PACKAGE_VERSION = '1.2.3';
     public $DEFAULT_TIMEOUT = 1000 * 60 * 2;
 
     public function __construct($apikey)
@@ -53,7 +54,6 @@ class ArifPay
             ]);
 
             $arifAPIResponse = ArifpayAPIResponse::fromJson(json_decode($response->getBody(), true));
-
 
             return ArifpayCheckoutResponse::fromJson($arifAPIResponse->data);
         } catch (ConnectionErrorException $e) {
@@ -103,6 +103,16 @@ class ArifPay
                 }
 
                 throw new ArifpayBadRequestException($msg, $e);
+            }
+            if ($response->getStatusCode() === 404) {
+                $responseBodyAsString = $response->getBody()->getContents();
+                $msg = "Invalid Request, Not found.";
+                if (! empty($responseBodyAsString)) {
+                    $responseJson = json_decode($responseBodyAsString, true);
+                    $msg = $responseJson["msg"];
+                }
+
+                throw new ArifpayNotFoundException($msg, $e);
             }
 
             throw new ArifpayException($e->response->data["msg"], $e);
