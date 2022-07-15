@@ -1,4 +1,6 @@
-
+---
+sidebar_position: 2
+---
 [<img src="https://arifpay.net/brand/ArifPay-Logo-(Full-Color).png" />](https://arifpay.net)
 
 # Arifpay Laravel API Package.
@@ -66,7 +68,7 @@ use Arifpay\Arifpay\Lib\ArifpayOptions;
 use Illuminate\Support\Carbon;
 
 $arifpay = new Arifpay('your-api-key');
-$d = new  Carbon();
+$d = new  Carbon::now();
 $d->setMonth(10);
 $expired = ArifpaySupport::getExpireDateFromDate($d);
 $data = new ArifpayCheckoutRequest(
@@ -97,6 +99,10 @@ echo $session->session_id;
 
 ```
 
+::Note 
+    you Must use `use Illuminate\Support\Carbon` instead of `use Carbon\Carbon` to get the expire date
+    
+
 After putting your building  `ArifpayCheckoutRequest` just call the `create` method. Note passing `sandbox: true` option will create the session in test environment.
 
 This is session response object contains the following fields
@@ -117,7 +123,7 @@ To track the progress of a checkout session you can use the fetch method as show
 ```php
  $arifpay = new Arifpay('API KEY...');
 // A sessionId will be returned when creating a session.
- $session = $arifpay->checkout->fetch('checkOutSessionID', new ArifpayOptions(sandbox: true));
+ $session = $arifpay->checkout->fetch('checkOutSessionID', new ArifpayOptions(true));
 ```
 
 The following object represents a session
@@ -125,7 +131,7 @@ The following object represents a session
 ```php
 {
   public int $id, 
-  public  ?ArifpayTransaction $transcation, 
+  public ArifpayTransaction $transcation, 
   public float $totalAmount, 
   public bool $test,  
   public string $uuid, 
@@ -145,6 +151,10 @@ Released Date: `v1.2.0` June 30, 2022
 - Name space changed. use Arifpay/Arifpay
 - Exception Handling Improved
 
+Released Date: `v1.3.0` June 30, 2022
+
+- `expiredate` parameter in checkout session create formate changed to LocalDateTime format
+- Exception Handling For Non Exsisting Session
 
 
 ## More Information
@@ -152,6 +162,7 @@ Released Date: `v1.2.0` June 30, 2022
 - [Check Full Example](https://github.com/Arifpay-net/Laravel-sample)
 - [REST API Version](https://developer.arifpay.net/docs/checkout/overview)
 - [Mobile SDK](https://developer.arifpay.net/docs/clientSDK/overview)
+- [Change Log](https://developer.arifpay.net/docs/nodejs/changelog)
 - [Node JS](https://developer.arifpay.net/docs/nodejs/overview)
 - [Laravel](https://developer.arifpay.net/docs/laravel/overview)
 - [Change Log](https://developer.arifpay.net/docs/laravel/changelog)

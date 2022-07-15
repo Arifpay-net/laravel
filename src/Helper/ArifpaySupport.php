@@ -8,6 +8,6 @@ class ArifpaySupport
 {
     public static function getExpireDateFromDate(Carbon $date)
     {
-        return $date->format('Y-m-d');
+        return $date->toDateTimeLocalString();
     }
 }
