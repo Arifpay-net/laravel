@@ -1,6 +1,4 @@
----
-sidebar_position: 2
----
+
 [<img src="https://arifpay.net/brand/ArifPay-Logo-(Full-Color).png" />](https://arifpay.net)
 
 # Arifpay Laravel API Package.
