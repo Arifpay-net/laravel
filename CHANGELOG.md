@@ -2,6 +2,10 @@
 
 All notable changes to `arifpay` will be documented in this file.
 
+## v2.0.0 - 2022-08-10
+
+V2 released. DirectPay functionality added. Learn more about [DirectPay here](https://developer.arifpay.net/docs/direcPay/overview)
+
 ## v1.3.0 - 2022-07-15
 
 Released Date: `v1.0.3` July 15, 2022
