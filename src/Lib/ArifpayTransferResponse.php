@@ -29,7 +29,7 @@ class ArifpayTransferResponse implements JsonSerializable
             "session_id" => $this->session_id,
             "url" => $this->url,
             "otp" => $this->otp,
-            "transaction" => $this->transaction
+            "transaction" => $this->transaction,
         ];
     }
 

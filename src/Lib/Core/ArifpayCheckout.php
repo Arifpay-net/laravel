@@ -10,7 +10,6 @@ use Arifpay\Arifpay\Lib\ArifpayCheckoutResponse;
 use Arifpay\Arifpay\Lib\ArifpayCheckoutSession;
 use Arifpay\Arifpay\Lib\ArifpayOptions;
 use Arifpay\Arifpay\Lib\Exception\ArifpayNetworkException;
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\RequestOptions;
@@ -23,7 +22,6 @@ class ArifpayCheckout
 
 
     public $http_client;
-  
 
     public function __construct($http_client)
     {
@@ -49,6 +47,7 @@ class ArifpayCheckout
             throw new ArifpayNetworkException();
         } catch (ClientException $e) {
             ArifpaySupport::__handleException($e);
+
             throw $e;
         }
     }
@@ -70,8 +69,8 @@ class ArifpayCheckout
             throw new ArifpayNetworkException();
         } catch (RequestException $e) {
             ArifpaySupport::__handleException($e);
+
             throw $e;
         }
     }
-
 }

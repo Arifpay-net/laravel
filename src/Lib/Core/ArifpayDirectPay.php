@@ -2,9 +2,9 @@
 
 namespace Arifpay\Arifpay\Lib\Core;
 
-use Arifpay\Arifpay\Lib\Core\DirectPay\ArifpayTelebirr;
 use Arifpay\Arifpay\Lib\Core\DirectPay\ArifpayAwash;
 use Arifpay\Arifpay\Lib\Core\DirectPay\ArifpayAwashWallet;
+use Arifpay\Arifpay\Lib\Core\DirectPay\ArifpayTelebirr;
 
 class ArifpayDirectPay
 {
@@ -13,11 +13,10 @@ class ArifpayDirectPay
 
 
     public $http_client;
-    
+
     public $telebirr;
     public $awash;
     public $awash_wallet;
-  
 
     public function __construct($http_client)
     {

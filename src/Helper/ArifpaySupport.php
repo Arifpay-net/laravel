@@ -2,25 +2,20 @@
 
 namespace Arifpay\Arifpay\Helper;
 
-use Illuminate\Support\Carbon;
-use Arifpay\Arifpay\Lib\Exception\ArifpayUnAuthorizedException;
-use Arifpay\Arifpay\Lib\Exception\ArifpayException;
-use Arifpay\Arifpay\Lib\Exception\ArifpayNotFoundException;
-use Arifpay\Arifpay\Lib\Exception\ArifpayNetworkException;
 use Arifpay\Arifpay\Lib\Exception\ArifpayBadRequestException;
-use Exception;
-use GuzzleHttp\Client;
+use Arifpay\Arifpay\Lib\Exception\ArifpayException;
+use Arifpay\Arifpay\Lib\Exception\ArifpayNetworkException;
+use Arifpay\Arifpay\Lib\Exception\ArifpayNotFoundException;
+use Arifpay\Arifpay\Lib\Exception\ArifpayUnAuthorizedException;
 use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\RequestOptions;
-use League\Flysystem\ConnectionErrorException;
+use Illuminate\Support\Carbon;
+
 class ArifpaySupport
 {
     public static function getExpireDateFromDate(Carbon $date)
     {
         return $date->toDateTimeLocalString();
     }
-
 
     public static function __handleException(ClientException $e)
     {
