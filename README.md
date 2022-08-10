@@ -39,6 +39,8 @@ The package needs to be configured with your account's API key, which is
 available in the [Arifpay Dashboard](https://dashboard.arifpay.net/app/api). Require it with the key's
 value. After install the package. you can use as follow.
 
+ > :warning: Since V2 ``Arifpay->create()`` is deprecated and ``Arifpay->checkout->create()`` should be used.
+
 ```php
 use Arifpay\Arifpay\Arifpay;
 
@@ -92,7 +94,7 @@ $data = new ArifpayCheckoutRequest(
         ]),
     ],
 );
-$session =  $arifpay->checkout()->create($data, new ArifpayOptions(sandbox: true));
+$session =  $arifpay->checkout->create($data, new ArifpayOptions(sandbox: true));
 echo $session->session_id;
 
 ```
@@ -137,6 +139,29 @@ The following object represents a session
   public string $update_at
 }
 ```
+## DirectPay
+
+learn more about [DirectPay here](https://developer.arifpay.net/docs/direcPay/overview)
+### DirectPay for telebirr
+```php 
+     $session = $arifpay->checkout->create($data, new ArifpayOptions(true));
+
+    return $arifpay->directPay->telebirr->pay($session->session_id);
+```
+
+### DirectPay for awash wallet
+```php 
+     $session = $arifpay->checkout->create($data, new ArifpayOptions(true));
+
+    return $arifpay->directPay->awash_wallet->pay($session->session_id);
+```
+
+### DirectPay for awash
+```php 
+     $session = $arifpay->checkout->create($data, new ArifpayOptions(true));
+
+    return $arifpay->directPay->awash->pay($session->session_id);
+```
 
 # Change Log
 
@@ -154,9 +179,14 @@ Released Date: `v1.3.0` June 30, 2022
 - `expiredate` parameter in checkout session create formate changed to LocalDateTime format
 - Exception Handling For Non Exsisting Session
 
+Released Date: `v2.0.0` Aug 10, 2022
+
+- `DirectPay` added for Telebirr and Awash payment options
+
 
 ## More Information
 
+- [DirectPay](https://developer.arifpay.net/docs/direcPay/overview)
 - [Check Full Example](https://github.com/Arifpay-net/Laravel-sample)
 - [REST API Version](https://developer.arifpay.net/docs/checkout/overview)
 - [Mobile SDK](https://developer.arifpay.net/docs/clientSDK/overview)
