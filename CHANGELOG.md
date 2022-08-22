@@ -2,6 +2,10 @@
 
 All notable changes to `arifpay` will be documented in this file.
 
+## v2.1.0 - 2022-08-22
+
+Cancel checkout session.
+
 ## v2.0.0 - 2022-08-10
 
 V2 released. DirectPay functionality added. Learn more about [DirectPay here](https://developer.arifpay.net/docs/direcPay/overview)
