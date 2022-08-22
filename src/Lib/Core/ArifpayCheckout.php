@@ -73,4 +73,26 @@ class ArifpayCheckout
             throw $e;
         }
     }
+
+    public function cancel(string $session_iD, ArifpayOptions $option = null): ArifpayCheckoutSession
+    {
+        if ($option == null) {
+            $option = new ArifpayOptions(false);
+        }
+
+        try {
+            $basePath = $option->sandbox ? '/sandbox' : '';
+            $response = $this->http_client->post(Arifpay::API_VERSION."$basePath/checkout/session/cancel/$session_iD");
+
+            $arifAPIResponse = ArifpayAPIResponse::fromJson(json_decode($response->getBody(), true));
+
+            return ArifpayCheckoutSession::fromJson($arifAPIResponse->data);
+        } catch (ConnectionErrorException $e) {
+            throw new ArifpayNetworkException();
+        } catch (RequestException $e) {
+            ArifpaySupport::__handleException($e);
+
+            throw $e;
+        }
+    }
 }
