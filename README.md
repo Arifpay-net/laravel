@@ -139,6 +139,19 @@ The following object represents a session
   public string $update_at
 }
 ```
+
+## Cancel Session by Session ID
+
+If the merchant want to cancel a checkout session. it's now possible as shown below.
+
+```php
+ $arifpay = new Arifpay('API KEY...');
+// A sessionId will be returned when creating a session.
+ $session = $arifpay->checkout->cancel('checkOutSessionID', new ArifpayOptions(true));
+```
+
+The `ArifpayCheckoutSession` class is returned.
+
 ## DirectPay
 
 learn more about [DirectPay here](https://developer.arifpay.net/docs/direcPay/overview)
